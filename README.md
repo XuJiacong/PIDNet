@@ -5,7 +5,7 @@ This is the official repository for our recent work: PIDNet
 
 ## Highlights
 <p align="center">
-  <img src="figs/cityscapes_score.jpg" alt="overview-of-our-method" width="600"/></br>
+  <img src="figs/cityscapes_score.jpg" alt="overview-of-our-method" width="500"/></br>
   <span align="center">Comparison of inference speed and accuracy for real-time models on test set of Cityscapes</span> 
 </p>
 
@@ -17,6 +17,19 @@ This is the official repository for our recent work: PIDNet
    - Our paper was submitted to arXiv and paperwithcode for public access. (May/30/2022)
    - The training and testing codes for PIDNet is available here. (May/25/2022)
 
+## Overview
+<p align="center">
+  <img src="figs/pidnet.jpg" alt="overview-of-our-method" width="800"/></br>
+  <span align="center">Comparison of inference speed and accuracy for real-time models on test set of Cityscapes</span> 
+</p>
+
 ## Prerequisites
 - Pytorch 1.1
+
+## Usage
+
+### 0. Prepare the dataset
+
+* Download the [leftImg8bit_trainvaltest.zip](https://www.cityscapes-dataset.com/file-handling/?packageID=3) and [gtFine_trainvaltest.zip](https://www.cityscapes-dataset.com/file-handling/?packageID=1) from the Cityscapes.
+* Link data to the  `data` dir.
 
