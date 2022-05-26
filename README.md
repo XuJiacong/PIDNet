@@ -15,12 +15,12 @@ This is the official repository for our recent work: PIDNet
 
 ## Updates
    - Our paper was submitted to arXiv and paperwithcode for public access. (May/30/2022)
-   - The training and testing codes for PIDNet is available here. (May/25/2022)
+   - The training and testing codes and trained models for PIDNet is available here. (May/25/2022)
 
 ## Overview
 <p align="center">
   <img src="figs/pidnet.jpg" alt="overview-of-our-method" width="800"/></br>
-  <span align="center">Comparison of inference speed and accuracy for real-time models on test set of Cityscapes</span> 
+  <span align="center">An overview of the basic architecture of our proposed Proportional-Integral-Derivative Network (PIDNet)</span> 
 </p>
 
 ## Prerequisites
