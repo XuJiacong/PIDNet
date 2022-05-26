@@ -1,0 +1,1 @@
+Put the the folders of test, test_labels, train, train_labels, val and val_labels here!
