@@ -31,6 +31,23 @@ P, I and D branches are responsiable for detail preservation, context embedding 
 </p>
 For operation, "OP, N, C" means operation OP with stride of N and the No. output channel is C; Output: output size given input size of 1024; mxRB: m residual basic blocks; 2xRBB: 2 residual bottleneck blocks; OP<sub>1</sub>\OP<sub>2</sub>: OP<sub>1</sub> is used for PIDNet-L while OP<sub>1</sub> is applied in PIDNet-M and PIDNet-S. (m,n,C) are scheduled to be (2,3,32), (2,3,64) and (3,4,64) for PIDNet-S, PIDNet-M and PIDNet-L, respectively.
 
+## Models
+For easy reproduction, we provide the pretrained models on ImageNet here.
+
+Also, the finetuned models on Cityscapes and Camvid are available for direct application in road scene parsing.
+Model (Cityscapes) | Val (% mIOU) | Test (% mIOU)| FPS 
+--- |:---:|:---:|:---:|:---:
+PIDNet-S | [78.8](https://) | [78.6](https://) | 93.2 | [download]
+PIDNet-M | [79.9](https://) | [79.8](https://) | 42.2 | [download](https://)
+PIDNet-L | [80.9](https://) | [80.6](https://) | 31.1 | [download](https://)
+
+
+Model (CamVid) | Val (% mIOU) | Test (% mIOU)| FPS | Link
+--- |:---:|:---:|:---:|:---:
+PIDNet-S | - | 81.6 | 151.6 | [download](https://)
+PIDNet-M | - | 82.7 | 88.2 | [download](https://)
+
+
 ## Prerequisites
 This implementation is based on [HRNet-Semantic-Segmentation](https://github.com/HRNet/HRNet-Semantic-Segmentation). Please refer to their repository for installation and dataset preparation.
 
