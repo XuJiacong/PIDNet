@@ -12,7 +12,6 @@ class CamVid(BaseDataset):
     def __init__(self, 
                  root, 
                  list_path, 
-                 num_samples=None, 
                  num_classes=11,
                  multi_scale=True, 
                  flip=True, 
@@ -37,8 +36,7 @@ class CamVid(BaseDataset):
         self.img_list = [line.strip().split() for line in open(root+list_path)]
 
         self.files = self.read_files()
-        if num_samples:
-            self.files = self.files[:num_samples]
+
 
         self.ignore_label = ignore_label
         
