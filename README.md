@@ -42,9 +42,9 @@ Also, the finetuned models on Cityscapes and Camvid are available for direct app
 
 | Model (Cityscapes) | Val (% mIOU) | Test (% mIOU)| FPS |
 |:-:|:-:|:-:|:-:|
-| PIDNet-S | [78.8](https://) | [78.6](https://) | 93.2 |
-| PIDNet-M | [79.9](https://) | [79.8](https://) | 42.2 |
-| PIDNet-L | [80.9](https://) | [80.6](https://) | 31.1 |
+| PIDNet-S | [78.8](https://drive.google.com/file/d/1JakgBam_GrzyUMp-NbEVVBPEIXLSCssH/view?usp=sharing) | [78.6](https://drive.google.com/file/d/1VcF3NXLQvz2qE3LXttpxWQSdxTbATslO/view?usp=sharing) | 93.2 |
+| PIDNet-M | [79.9](https://drive.google.com/file/d/1q0i4fVWmO7tpBKq_eOyIXe-mRf_hIS7q/view?usp=sharing) | [79.8](https://drive.google.com/file/d/1wxdFBzMmkF5XDGc_LkvCOFJ-lAdb8trT/view?usp=sharing) | 42.2 |
+| PIDNet-L | [80.9](https://drive.google.com/file/d/1AR8LHC3613EKwG23JdApfTGsyOAcH0_L/view?usp=sharing) | [80.6](https://drive.google.com/file/d/1Ftij_vhcd62WEBqGdamZUcklBcdtB1f3/view?usp=sharing) | 31.1 |
 
 | Model (CamVid) | Val (% mIOU) | Test (% mIOU)| FPS |
 |:-:|:-:|:-:|:-:|
