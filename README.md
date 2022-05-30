@@ -31,8 +31,29 @@ P, I and D branches are responsiable for detail preservation, context embedding 
 </p>
 For operation, "OP, N, C" means operation OP with stride of N and the No. output channel is C; Output: output size given input size of 1024; mxRB: m residual basic blocks; 2xRBB: 2 residual bottleneck blocks; OP<sub>1</sub>\OP<sub>2</sub>: OP<sub>1</sub> is used for PIDNet-L while OP<sub>1</sub> is applied in PIDNet-M and PIDNet-S. (m,n,C) are scheduled to be (2,3,32), (2,3,64) and (3,4,64) for PIDNet-S, PIDNet-M and PIDNet-L, respectively.
 
+## Models
+For simple reproduction, we provide the ImageNet pretrained models here.
+
+| Model (ImageNet) | PIDNet-S | PIDNet-M | PIDNet-L |
+|:-:|:-:|:-:|:-:|
+| Link | [download](https://) | [download](https://) | [download](https://) |
+
+Also, the finetuned models on Cityscapes and Camvid are available for direct application in road scene parsing.
+
+| Model (Cityscapes) | Val (% mIOU) | Test (% mIOU)| FPS |
+|:-:|:-:|:-:|:-:|
+| PIDNet-S | [78.8](https://) | [78.6](https://) | 93.2 |
+| PIDNet-M | [79.9](https://) | [79.8](https://) | 42.2 |
+| PIDNet-L | [80.9](https://) | [80.6](https://) | 31.1 |
+
+| Model (CamVid) | Val (% mIOU) | Test (% mIOU)| FPS |
+|:-:|:-:|:-:|:-:|
+| PIDNet-S | - | [81.6](https://) | 151.6 |
+| PIDNet-M | - | [82.7](https://) | 88.2 |
+
+
 ## Prerequisites
-- Pytorch 1.1
+This implementation is based on [HRNet-Semantic-Segmentation](https://github.com/HRNet/HRNet-Semantic-Segmentation). Please refer to their repository for installation and dataset preparation. The inference speed is tested on single RTX 3090 using the method introduced by [SwiftNet](https://arxiv.org/pdf/1903.08469.pdf). No third-party acceleration lib is used, so you can try [TensorRT](https://github.com/NVIDIA/TensorRT) or other approaches for faster speed.
 
 ## Usage
 
