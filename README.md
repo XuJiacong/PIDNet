@@ -36,7 +36,7 @@ For simple reproduction, we provide the ImageNet pretrained models here.
 
 | Model (ImageNet) | PIDNet-S | PIDNet-M | PIDNet-L |
 |:-:|:-:|:-:|:-:|
-| Link | [download](https://drive.google.com/file/d/1hX3Y3L8A9IUP3EMSEKXeWrMdyuK6WPaN/view?usp=sharing) | [download](https://drive.google.com/file/d/1OJ1uefbdiq0nfosQTOHta6jThirBA-0E/view?usp=sharing) | [download](https://drive.google.com/file/d/18IQgrxrwv8oA8kCeGoDdnkbZAKM6Szuf/view?usp=sharing) |
+| Link | [download](https://drive.google.com/file/d/1hIBp_8maRr60-B3PF0NVtaA6TYBvO4y-/view?usp=sharing) | [download](https://drive.google.com/file/d/1gB9RxYVbdwi9eO5lbT073q-vRoncpYT1/view?usp=sharing) | [download](https://drive.google.com/file/d/1Eg6BwEsnu3AkKLO8lrKsoZ8AOEb2KZHY/view?usp=sharing) |
 
 Also, the finetuned models on Cityscapes and Camvid are available for direct application in road scene parsing.
 
