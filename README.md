@@ -79,11 +79,21 @@ python tools/train.py --cfg configs/cityscapes/pidnet_large_cityscapes_trainval.
 * Download the finetuned models for Cityscapes and CamVid and put them into `pretrained_models/cityscapes/` and `pretrained_models/camvid/` dirs, respectively.
 * For example, evaluate the PIDNet-S on Cityscapes val set:
 ````bash
-python tools/eval.py --cfg configs/cityscapes/pidnet_small_cityscapes.yaml TEST.MODEL_FILE pretrained_models/cityscapes/PIDNet_S_Cityscapes_val.pt
+python tools/eval.py --cfg configs/cityscapes/pidnet_small_cityscapes.yaml \
+                          TEST.MODEL_FILE pretrained_models/cityscapes/PIDNet_S_Cityscapes_val.pt
 ````
-* Or generate the testing results of PIDNet-L on Cityscapes:
+* Generate the testing results of PIDNet-L on Cityscapes test set:
 ````bash
-python tools/eval.py --cfg configs/cityscapes/pidnet_large_cityscapes_trainval.yaml TEST.MODEL_FILE pretrained_models/cityscapes/PIDNet_L_Cityscapes_val.pt
+python tools/eval.py --cfg configs/cityscapes/pidnet_large_cityscapes_trainval.yaml \
+                          TEST.MODEL_FILE pretrained_models/cityscapes/PIDNet_L_Cityscapes_test.pt \
+                          DATASET.TEST_SET list/cityscapes/test.lst
+````
+
+### 3. Speed Measurement
+
+* Measure the inference speed of PIDNet-S:
+````bash
+python models/speed/pidnet_speed.py --a 'pidnet-s'
 ````
 
 
