@@ -36,7 +36,7 @@ For simple reproduction, we provide the ImageNet pretrained models here.
 
 | Model (ImageNet) | PIDNet-S | PIDNet-M | PIDNet-L |
 |:-:|:-:|:-:|:-:|
-| Link | [download](https://drive.google.com/file/d/1hX3Y3L8A9IUP3EMSEKXeWrMdyuK6WPaN/view?usp=sharing) | [download](https://drive.google.com/file/d/1OJ1uefbdiq0nfosQTOHta6jThirBA-0E/view?usp=sharing) | [download](https://drive.google.com/file/d/18IQgrxrwv8oA8kCeGoDdnkbZAKM6Szuf/view?usp=sharing) |
+| Link | [download](https://drive.google.com/file/d/1hIBp_8maRr60-B3PF0NVtaA6TYBvO4y-/view?usp=sharing) | [download](https://drive.google.com/file/d/1gB9RxYVbdwi9eO5lbT073q-vRoncpYT1/view?usp=sharing) | [download](https://drive.google.com/file/d/1Eg6BwEsnu3AkKLO8lrKsoZ8AOEb2KZHY/view?usp=sharing) |
 
 Also, the finetuned models on Cityscapes and Camvid are available for direct application in road scene parsing.
 
@@ -48,8 +48,8 @@ Also, the finetuned models on Cityscapes and Camvid are available for direct app
 
 | Model (CamVid) | Val (% mIOU) | Test (% mIOU)| FPS |
 |:-:|:-:|:-:|:-:|
-| PIDNet-S | - | [81.6](https://) | 151.6 |
-| PIDNet-M | - | [82.7](https://) | 88.2 |
+| PIDNet-S | - | [81.6](https://drive.google.com/file/d/1Drz7C7s6G8Jm2SHt85EMR7KdXXLRIRnE/view?usp=sharing) | 151.6 |
+| PIDNet-M | - | [82.7](https://drive.google.com/file/d/1g4H2aN4JZPGTRrRKX_mhSXJJBDCNW8qt/view?usp=sharing) | 88.2 |
 
 
 ## Prerequisites
@@ -59,6 +59,56 @@ This implementation is based on [HRNet-Semantic-Segmentation](https://github.com
 
 ### 0. Prepare the dataset
 
-* Download the [leftImg8bit_trainvaltest.zip](https://www.cityscapes-dataset.com/file-handling/?packageID=3) and [gtFine_trainvaltest.zip](https://www.cityscapes-dataset.com/file-handling/?packageID=1) from the Cityscapes.
-* Link data to the  `data` dir.
+* Download the [Cityscapes](https://www.cityscapes-dataset.com/) and [CamVid](http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/) datasets and unzip them in `data/cityscapes` and `data/camvid` dirs.
+* Check if the paths contained in lists of `data/list` are correct for dataset images.
+
+### 1. Training
+
+* Download the ImageNet pretrained models and put them into `pretrained_models/imagenet/` dir.
+* For example, train the PIDNet-S on Cityscapes with batch size of 12 on 2 GPUs:
+````bash
+python tools/train.py --cfg configs/cityscapes/pidnet_small_cityscapes.yaml GPUS (0,1) TRAIN.BATCH_SIZE_PER_GPU 6
+````
+* Or train the PIDNet-L on Cityscapes using train and val sets simultaneously with batch size of 12 on 4 GPUs:
+````bash
+python tools/train.py --cfg configs/cityscapes/pidnet_large_cityscapes_trainval.yaml GPUS (0,1,2,3) TRAIN.BATCH_SIZE_PER_GPU 3
+````
+
+### 2. Evaluation
+
+* Download the finetuned models for Cityscapes and CamVid and put them into `pretrained_models/cityscapes/` and `pretrained_models/camvid/` dirs, respectively.
+* For example, evaluate the PIDNet-S on Cityscapes val set:
+````bash
+python tools/eval.py --cfg configs/cityscapes/pidnet_small_cityscapes.yaml \
+                          TEST.MODEL_FILE pretrained_models/cityscapes/PIDNet_S_Cityscapes_val.pt
+````
+* Generate the testing results of PIDNet-L on Cityscapes test set:
+````bash
+python tools/eval.py --cfg configs/cityscapes/pidnet_large_cityscapes_trainval.yaml \
+                          TEST.MODEL_FILE pretrained_models/cityscapes/PIDNet_L_Cityscapes_test.pt \
+                          DATASET.TEST_SET list/cityscapes/test.lst
+````
+
+### 3. Speed Measurement
+
+* Measure the inference speed of PIDNet-S for Cityscapes:
+````bash
+python models/speed/pidnet_speed.py --a 'pidnet-s' --c 19 --r 1024 2048
+````
+* Measure the inference speed of PIDNet-M for CamVid:
+````bash
+python models/speed/pidnet_speed.py --a 'pidnet-m' --c 11 --r 720 960
+````
+
+## Citation
+
+```
+None
+```
+
+## Acknowledgement
+
+* Our implementation is modified based on [HRNet-Semantic-Segmentation](https://github.com/HRNet/HRNet-Semantic-Segmentation).
+* Latency measurement code is borrowed from the [DDRNet](https://github.com/ydhongHIT/DDRNet).
+* Thanks for their nice contribution.
 
