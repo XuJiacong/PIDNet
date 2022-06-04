@@ -21,11 +21,12 @@ This is the official repository for our recent work: PIDNet
 
 A demo of the segmentation performance of our proposed PIDNets: Original video (left) and predictions of PIDNet-S (middle) and PIDNet-L (right)
 <p align="center">
-  <img src="figs/video1.gif" alt="Cityscapes" width="250"/><img src="figs/pidnet_s_video1_high.gif" alt="Cityscapes" width="250"/><img src="figs/pidnet_l_video1_high.gif" alt="Cityscapes" width="250"/></br>
+  <img src="figs/video1_all.gif" alt="Cityscapes" width="800"/></br>
   <span align="center">Cityscapes Stuttgart demo video #1</span>
 </p>
+
 <p align="center">
-  <img src="figs/video2.gif" alt="Cityscapes" width="250"/><img src="figs/pidnet_s_video2_high.gif" alt="Cityscapes" width="250"/><img src="figs/pidnet_l_video2_high.gif" alt="Cityscapes" width="250"/></br>
+  <img src="figs/video2_all.gif" alt="Cityscapes" width="800"/></br>
   <span align="center">Cityscapes Stuttgart demo video #2</span>
 </p>
 
