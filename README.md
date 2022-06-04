@@ -11,11 +11,11 @@ This is the official repository for our recent work: PIDNet
 
 * **Towards Real-time Applications**: PIDNet could be directly used for the real-time applications, such as autonomous vehicle and medical imaging.
 * **A Novel Three-branch Network**: Addtional boundary branch is introduced to two-branch network to mimic the PID controller architecture and remedy the overshoot issue of previous models.
-* **More Accurate and Faster**: PIDNet-S presents 78.6% mIOU with speed of 93.2 FPS on Cityscapes test set and 81.6% mIOU with speed of 150.6 FPS on CamVid test set. Also, PIDNet-L acheives the highest accuracy (80.6% mIOU) in real-time domain (>30 FPS) for Cityscapes.
+* **More Accurate and Faster**: PIDNet-S presents 78.6% mIOU with speed of 93.2 FPS on Cityscapes test set and 81.6% mIOU with speed of 153.7 FPS on CamVid test set. Also, PIDNet-L acheives the highest accuracy (80.6% mIOU) in real-time domain (>30 FPS) for Cityscapes.
 
 ## Updates
-   - Our paper was submitted to arXiv and paperwithcode for public access. (May/30/2022)
-   - The training and testing codes and trained models for PIDNet is available here. (May/25/2022)
+   - Our paper was submitted to arXiv and paperwithcode for public access. (Jun/04/2022)
+   - The training and testing codes and trained models for PIDNet is available here. (Jun/03/2022)
 
 ## Overview
 <p align="center">
@@ -48,8 +48,8 @@ Also, the finetuned models on Cityscapes and Camvid are available for direct app
 
 | Model (CamVid) | Val (% mIOU) | Test (% mIOU)| FPS |
 |:-:|:-:|:-:|:-:|
-| PIDNet-S | - | [81.6](https://drive.google.com/file/d/1Drz7C7s6G8Jm2SHt85EMR7KdXXLRIRnE/view?usp=sharing) | 151.6 |
-| PIDNet-M | - | [82.7](https://drive.google.com/file/d/1g4H2aN4JZPGTRrRKX_mhSXJJBDCNW8qt/view?usp=sharing) | 88.2 |
+| PIDNet-S | - | [81.6](https://drive.google.com/file/d/1Drz7C7s6G8Jm2SHt85EMR7KdXXLRIRnE/view?usp=sharing) | 153.7 |
+| PIDNet-M | - | [82.7](https://drive.google.com/file/d/1g4H2aN4JZPGTRrRKX_mhSXJJBDCNW8qt/view?usp=sharing) | 85.6 |
 
 
 ## Prerequisites
@@ -102,6 +102,7 @@ python models/speed/pidnet_speed.py --a 'pidnet-m' --c 11 --r 720 960
 
 ## Citation
 
+If you think this implementation is useful to your work, please cite our paper:
 ```
 None
 ```
