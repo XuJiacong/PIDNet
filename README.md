@@ -96,5 +96,15 @@ python tools/eval.py --cfg configs/cityscapes/pidnet_large_cityscapes_trainval.y
 python models/speed/pidnet_speed.py --a 'pidnet-s'
 ````
 
+## Citation
 
+```
+None
+```
+
+## Acknowledgement
+
+* Our implementation is modified based on [HRNet-Semantic-Segmentation](https://github.com/HRNet/HRNet-Semantic-Segmentation).
+* Latency measurement code is borrowed from the [DDRNet](https://github.com/ydhongHIT/DDRNet).
+* Thanks for their nice contribution.
 
