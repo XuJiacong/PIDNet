@@ -59,6 +59,32 @@ This implementation is based on [HRNet-Semantic-Segmentation](https://github.com
 
 ### 0. Prepare the dataset
 
-* Download the [leftImg8bit_trainvaltest.zip](https://www.cityscapes-dataset.com/file-handling/?packageID=3) and [gtFine_trainvaltest.zip](https://www.cityscapes-dataset.com/file-handling/?packageID=1) from the Cityscapes.
-* Link data to the  `data` dir.
+* Download the Cityscapes and CamVid datasets and unzip them in `data/cityscapes` and `data/camvid` dirs.
+* Check if the paths contained in lists of `data/list` are correct for dataset images.
+
+### 1. Training
+
+* Download the ImageNet pretrained models and put them into `pretrained_models/imagenet/` dir.
+* For example, train the PIDNet-S on Cityscapes with batch size of 12 on 2 GPUs:
+````bash
+python tools/train.py --cfg configs/cityscapes/pidnet_small_cityscapes.yaml GPUS (0,1) TRAIN.BATCH_SIZE_PER_GPU 6
+````
+* Or train the PIDNet-L on Cityscapes using train and val sets simultaneously with batch size of 12 on 4 GPUs:
+````bash
+python tools/train.py --cfg configs/cityscapes/pidnet_large_cityscapes_trainval.yaml GPUS (0,1,2,3) TRAIN.BATCH_SIZE_PER_GPU 3
+````
+
+### 2. Evaluation
+
+* Download the finetuned models for Cityscapes and CamVid and put them into `pretrained_models/cityscapes/` and `pretrained_models/camvid/` dirs, respectively.
+* For example, evaluate the PIDNet-S on Cityscapes val set:
+````bash
+python tools/eval.py --cfg configs/cityscapes/pidnet_small_cityscapes.yaml TEST.MODEL_FILE pretrained_models/cityscapes/PIDNet_S_Cityscapes_val.pt
+````
+* Or generate the testing results of PIDNet-L on Cityscapes:
+````bash
+python tools/eval.py --cfg configs/cityscapes/pidnet_large_cityscapes_trainval.yaml TEST.MODEL_FILE pretrained_models/cityscapes/PIDNet_L_Cityscapes_val.pt
+````
+
+
 
