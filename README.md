@@ -18,9 +18,15 @@ This is the official repository for our recent work: PIDNet
    - The training and testing codes and trained models for PIDNet is available here. (Jun/03/2022)
 
 ## Demos
+
+A demo of the segmentation performance of our proposed PIDNets: Original video (left) and predictions of PIDNet-S (middle) and PIDNet-L (right)
 <p align="center">
   <img src="figs/video1.gif" alt="Cityscapes" width="250"/><img src="figs/pidnet_s_video1_high.gif" alt="Cityscapes" width="250"/><img src="figs/pidnet_l_video1_high.gif" alt="Cityscapes" width="250"/></br>
-  <span align="center">Predictions of PIDNet-L on Cityscapes Stuttgart demo video #1</span>
+  <span align="center">Cityscapes Stuttgart demo video #1</span>
+</p>
+<p align="center">
+  <img src="figs/video2.gif" alt="Cityscapes" width="250"/><img src="figs/pidnet_s_video2_high.gif" alt="Cityscapes" width="250"/><img src="figs/pidnet_l_video2_high.gif" alt="Cityscapes" width="250"/></br>
+  <span align="center">Cityscapes Stuttgart demo video #2</span>
 </p>
 
 ## Overview
