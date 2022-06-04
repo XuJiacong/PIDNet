@@ -59,7 +59,7 @@ This implementation is based on [HRNet-Semantic-Segmentation](https://github.com
 
 ### 0. Prepare the dataset
 
-* Download the Cityscapes and CamVid datasets and unzip them in `data/cityscapes` and `data/camvid` dirs.
+* Download the [Cityscapes](https://www.cityscapes-dataset.com/) and [CamVid](http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/) datasets and unzip them in `data/cityscapes` and `data/camvid` dirs.
 * Check if the paths contained in lists of `data/list` are correct for dataset images.
 
 ### 1. Training
