@@ -19,9 +19,9 @@ import torch.backends.cudnn as cudnn
 import _init_paths
 import models
 import datasets
-from config import config
-from config import update_config
-from core.function import testval, test
+from configs import config
+from configs import update_config
+from utils.function import testval, test
 from utils.utils import create_logger
 
 def parse_args():
@@ -29,7 +29,7 @@ def parse_args():
     
     parser.add_argument('--cfg',
                         help='experiment configure file name',
-                        default="experiments/cityscapes/ddrnet23_slim.yaml",
+                        default="experiments/cityscapes/pidnet_small_cityscapes.yaml",
                         type=str)
     parser.add_argument('opts',
                         help="Modify config options using the command-line",
@@ -77,8 +77,7 @@ def main():
     model_dict.update(pretrained_dict)
     model.load_state_dict(model_dict)
 
-    gpus = list(config.GPUS)
-    model = nn.DataParallel(model, device_ids=gpus).cuda()
+    model = model.cuda()
 
     # prepare data
     test_size = (config.TEST.IMAGE_SIZE[1], config.TEST.IMAGE_SIZE[0])
@@ -96,12 +95,20 @@ def main():
         test_dataset,
         batch_size=1,
         shuffle=False,
-        num_workers=config.WORKERS,
+        num_workers=0,
         pin_memory=True)
     
     start = timeit.default_timer()
     
-    if 'val' in config.DATASET.TEST_SET:
+    
+    if ('test' in config.DATASET.TEST_SET) and ('city' in config.DATASET.DATASET):
+        test(config, 
+             test_dataset, 
+             testloader, 
+             model,
+             sv_dir=final_output_dir)
+        
+    else:
         mean_IoU, IoU_array, pixel_acc, mean_acc = testval(config, 
                                                            test_dataset, 
                                                            testloader, 
@@ -112,12 +119,7 @@ def main():
             pixel_acc, mean_acc)
         logging.info(msg)
         logging.info(IoU_array)
-    elif 'test' in config.DATASET.TEST_SET:
-        test(config, 
-             test_dataset, 
-             testloader, 
-             model,
-             sv_dir=final_output_dir)
+
 
     end = timeit.default_timer()
     logger.info('Mins: %d' % np.int((end-start)/60))
