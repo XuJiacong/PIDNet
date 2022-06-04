@@ -14,7 +14,7 @@ This is the official repository for our recent work: PIDNet ([PDF](https://)）
 * **More Accurate and Faster**: PIDNet-S presents 78.6% mIOU with speed of 93.2 FPS on Cityscapes test set and 81.6% mIOU with speed of 153.7 FPS on CamVid test set. Also, PIDNet-L becomes the most accurate one (80.6% mIOU) among all the real-time networks for Cityscapes.
 
 ## Updates
-   - Our paper was submitted to arXiv and paperwithcode for public access. (Jun/04/2022)
+   - Our paper was submitted to arXiv for public access. (Jun/04/2022)
    - The training and testing codes and trained models for PIDNet is available here. (Jun/03/2022)
 
 ## Demos
