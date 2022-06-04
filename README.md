@@ -91,9 +91,13 @@ python tools/eval.py --cfg configs/cityscapes/pidnet_large_cityscapes_trainval.y
 
 ### 3. Speed Measurement
 
-* Measure the inference speed of PIDNet-S:
+* Measure the inference speed of PIDNet-S for Cityscapes:
 ````bash
-python models/speed/pidnet_speed.py --a 'pidnet-s'
+python models/speed/pidnet_speed.py --a 'pidnet-s' --c 19 --r 1024 2048
+````
+* Measure the inference speed of PIDNet-M for CamVid:
+````bash
+python models/speed/pidnet_speed.py --a 'pidnet-m' --c 11 --r 720 960
 ````
 
 ## Citation
