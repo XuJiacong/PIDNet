@@ -2,6 +2,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 This is the official repository for our recent work: PIDNet
+<p align="center">
+  <img src="figs/pidnet_l_video1_low.gif" alt="Cityscapes" width="300"/></br>
+  <span align="center">Predictions of PIDNet-L on Cityscapes Stuttgart demo video #1</span>
+</p>
 
 ## Highlights
 <p align="center">
