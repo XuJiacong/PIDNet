@@ -2,10 +2,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 This is the official repository for our recent work: PIDNet
-<p align="center">
-  <img src="figs/pidnet_l_video1_low.gif" alt="Cityscapes" width="300"/></br>
-  <span align="center">Predictions of PIDNet-L on Cityscapes Stuttgart demo video #1</span>
-</p>
 
 ## Highlights
 <p align="center">
@@ -20,6 +16,12 @@ This is the official repository for our recent work: PIDNet
 ## Updates
    - Our paper was submitted to arXiv and paperwithcode for public access. (Jun/04/2022)
    - The training and testing codes and trained models for PIDNet is available here. (Jun/03/2022)
+
+## Demos
+<p align="center">
+  <img src="figs/video1.gif" alt="Cityscapes" width="300"/><img src="figs/pidnet_s_video1_high.gif" alt="Cityscapes" width="300"/><img src="figs/pidnet_l_video1_high.gif" alt="Cityscapes" width="300"/></br>
+  <span align="center">Predictions of PIDNet-L on Cityscapes Stuttgart demo video #1</span>
+</p>
 
 ## Overview
 <p align="center">
