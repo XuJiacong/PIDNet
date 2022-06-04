@@ -15,7 +15,7 @@ This is the official repository for our recent work: PIDNet ([PDF](https://)）
 
 ## Updates
    - Our paper was submitted to arXiv for public access. (Jun/04/2022)
-   - The training and testing codes and trained models for PIDNet is available here. (Jun/03/2022)
+   - The training and testing codes and trained models for PIDNet are available here. (Jun/03/2022)
 
 ## Demos
 
