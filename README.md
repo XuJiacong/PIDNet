@@ -19,7 +19,7 @@ This is the official repository for our recent work: PIDNet
 
 ## Demos
 <p align="center">
-  <img src="figs/video1.gif" alt="Cityscapes" width="300"/><img src="figs/pidnet_s_video1_high.gif" alt="Cityscapes" width="300"/><img src="figs/pidnet_l_video1_high.gif" alt="Cityscapes" width="300"/></br>
+  <img src="figs/video1.gif" alt="Cityscapes" width="250"/><img src="figs/pidnet_s_video1_high.gif" alt="Cityscapes" width="250"/><img src="figs/pidnet_l_video1_high.gif" alt="Cityscapes" width="250"/></br>
   <span align="center">Predictions of PIDNet-L on Cityscapes Stuttgart demo video #1</span>
 </p>
 
