@@ -48,8 +48,8 @@ Also, the finetuned models on Cityscapes and Camvid are available for direct app
 
 | Model (CamVid) | Val (% mIOU) | Test (% mIOU)| FPS |
 |:-:|:-:|:-:|:-:|
-| PIDNet-S | - | [81.6](https://) | 151.6 |
-| PIDNet-M | - | [82.7](https://) | 88.2 |
+| PIDNet-S | - | [81.6](https://drive.google.com/file/d/1Drz7C7s6G8Jm2SHt85EMR7KdXXLRIRnE/view?usp=sharing) | 151.6 |
+| PIDNet-M | - | [82.7](https://drive.google.com/file/d/1g4H2aN4JZPGTRrRKX_mhSXJJBDCNW8qt/view?usp=sharing) | 88.2 |
 
 
 ## Prerequisites
