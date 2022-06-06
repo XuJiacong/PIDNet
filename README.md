@@ -95,6 +95,11 @@ python tools/train.py --cfg configs/cityscapes/pidnet_large_cityscapes_trainval.
 python tools/eval.py --cfg configs/cityscapes/pidnet_small_cityscapes.yaml \
                           TEST.MODEL_FILE pretrained_models/cityscapes/PIDNet_S_Cityscapes_val.pt
 ````
+* Or, evaluate the PIDNet-M on CamVid test set:
+````bash
+python tools/eval.py --cfg configs/camvid/pidnet_medium_camvid.yaml \
+                          TEST.MODEL_FILE pretrained_models/camvid/PIDNet_M_Camvid_Test.pt
+````
 * Generate the testing results of PIDNet-L on Cityscapes test set:
 ````bash
 python tools/eval.py --cfg configs/cityscapes/pidnet_large_cityscapes_trainval.yaml \
