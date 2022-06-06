@@ -98,7 +98,8 @@ python tools/eval.py --cfg configs/cityscapes/pidnet_small_cityscapes.yaml \
 * Or, evaluate the PIDNet-M on CamVid test set:
 ````bash
 python tools/eval.py --cfg configs/camvid/pidnet_medium_camvid.yaml \
-                          TEST.MODEL_FILE pretrained_models/camvid/PIDNet_M_Camvid_Test.pt
+                          TEST.MODEL_FILE pretrained_models/camvid/PIDNet_M_Camvid_Test.pt \
+                          DATASET.TEST_SET list/camvid/test.lst
 ````
 * Generate the testing results of PIDNet-L on Cityscapes test set:
 ````bash
