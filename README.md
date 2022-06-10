@@ -1,7 +1,10 @@
 # PIDNet: A Real-time Semantic Segmentation Network Inspired from PID Controller
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+	
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/pidnet-a-real-time-semantic-segmentation/real-time-semantic-segmentation-on-cityscapes)](https://paperswithcode.com/sota/real-time-semantic-segmentation-on-cityscapes?p=pidnet-a-real-time-semantic-segmentation)
 
-This is the official repository for our recent work: PIDNet ([PDF](https://)）
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/pidnet-a-real-time-semantic-segmentation/real-time-semantic-segmentation-on-cityscapes-1)](https://paperswithcode.com/sota/real-time-semantic-segmentation-on-cityscapes-1?p=pidnet-a-real-time-semantic-segmentation) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
+This is the official repository for our recent work: PIDNet ([PDF](https://arxiv.org/pdf/2206.02066)）
 
 ## Highlights
 <p align="center">
@@ -14,6 +17,7 @@ This is the official repository for our recent work: PIDNet ([PDF](https://)）
 * **More Accurate and Faster**: PIDNet-S presents 78.6% mIOU with speed of 93.2 FPS on Cityscapes test set and 81.6% mIOU with speed of 153.7 FPS on CamVid test set. Also, PIDNet-L becomes the most accurate one (80.6% mIOU) among all the real-time networks for Cityscapes.
 
 ## Updates
+   - Our paper was marked as state of the art in [Papers with Code](https://paperswithcode.com/task/real-time-semantic-segmentation). (Jun/06/2022)
    - Our paper was submitted to arXiv for public access. (Jun/04/2022)
    - The training and testing codes and trained models for PIDNet are available here. (Jun/03/2022)
 
@@ -61,9 +65,8 @@ Also, the finetuned models on Cityscapes and Camvid are available for direct app
 
 | Model (CamVid) | Val (% mIOU) | Test (% mIOU)| FPS |
 |:-:|:-:|:-:|:-:|
-| PIDNet-S | - | [81.6](https://drive.google.com/file/d/1Drz7C7s6G8Jm2SHt85EMR7KdXXLRIRnE/view?usp=sharing) | 153.7 |
-| PIDNet-M | - | [82.7](https://drive.google.com/file/d/1g4H2aN4JZPGTRrRKX_mhSXJJBDCNW8qt/view?usp=sharing) | 85.6 |
-
+| PIDNet-S |-| [80.1](https://drive.google.com/file/d/1h3IaUpssCnTWHiPEUkv-VgFmj86FkY3J/view?usp=sharing) | 153.7 |
+| PIDNet-M |-| [82.0](https://drive.google.com/file/d/1rNGTc8LD42h8G3HaedtqwS0un4_-gEbB/view?usp=sharing) | 85.6 |
 
 ## Prerequisites
 This implementation is based on [HRNet-Semantic-Segmentation](https://github.com/HRNet/HRNet-Semantic-Segmentation). Please refer to their repository for installation and dataset preparation. The inference speed is tested on single RTX 3090 using the method introduced by [SwiftNet](https://arxiv.org/pdf/1903.08469.pdf). No third-party acceleration lib is used, so you can try [TensorRT](https://github.com/NVIDIA/TensorRT) or other approaches for faster speed.
@@ -95,6 +98,12 @@ python tools/train.py --cfg configs/cityscapes/pidnet_large_cityscapes_trainval.
 python tools/eval.py --cfg configs/cityscapes/pidnet_small_cityscapes.yaml \
                           TEST.MODEL_FILE pretrained_models/cityscapes/PIDNet_S_Cityscapes_val.pt
 ````
+* Or, evaluate the PIDNet-M on CamVid test set:
+````bash
+python tools/eval.py --cfg configs/camvid/pidnet_medium_camvid.yaml \
+                          TEST.MODEL_FILE pretrained_models/camvid/PIDNet_M_Camvid_Test.pt \
+                          DATASET.TEST_SET list/camvid/test.lst
+````
 * Generate the testing results of PIDNet-L on Cityscapes test set:
 ````bash
 python tools/eval.py --cfg configs/cityscapes/pidnet_large_cityscapes_trainval.yaml \
@@ -115,9 +124,16 @@ python models/speed/pidnet_speed.py --a 'pidnet-m' --c 11 --r 720 960
 
 ## Citation
 
-If you think this implementation is useful to your work, please cite our paper:
+If you think this implementation is useful for your work, please cite our paper:
 ```
-None
+@misc{xu2022pidnet,
+      title={PIDNet: A Real-time Semantic Segmentation Network Inspired from PID Controller}, 
+      author={Jiacong Xu and Zixiang Xiong and Shankar P. Bhattacharyya},
+      year={2022},
+      eprint={2206.02066},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
 ```
 
 ## Acknowledgement
