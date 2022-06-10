@@ -17,7 +17,7 @@ DATASET:
 MODEL:
   NAME: pidnet_m
   NUM_OUTPUTS: 2
-  PRETRAINED: "pretrained_models/imagenet/PIDNet_M_ImageNet.pth.tar"
+  PRETRAINED: "pretrained_models/cityscapes/PIDNet_M_Cityscapes_test.pt"
 LOSS:
   USE_OHEM: true
   OHEMTHRES: 0.9
@@ -32,7 +32,7 @@ TRAIN:
   BATCH_SIZE_PER_GPU: 6
   SHUFFLE: true
   BEGIN_EPOCH: 0
-  END_EPOCH: 968
+  END_EPOCH: 200
   RESUME: false
   OPTIMIZER: sgd
   LR: 0.005
@@ -48,7 +48,7 @@ TEST:
   - 960
   - 720
   BASE_SIZE: 960
-  BATCH_SIZE_PER_GPU: 6
+  BATCH_SIZE_PER_GPU: 1
   FLIP_TEST: false
   MULTI_SCALE: false
   MODEL_FILE: ''

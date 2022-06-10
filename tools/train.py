@@ -76,7 +76,8 @@ def main():
         print("The gpu numbers do not match!")
         return 0
     
-    model = models.pidnet.get_seg_model(config, imgnet_pretrained=True)
+    imgnet = 'imagenet' in config.MODEL.PRETRAINED
+    model = models.pidnet.get_seg_model(config, imgnet_pretrained=imgnet)
  
     batch_size = config.TRAIN.BATCH_SIZE_PER_GPU * len(gpus)
     # prepare data
@@ -168,8 +169,9 @@ def main():
     start = timeit.default_timer()
     end_epoch = config.TRAIN.END_EPOCH
     num_iters = config.TRAIN.END_EPOCH * epoch_iters
+    real_end = 120+1 if 'camvid' in config.DATASET.TRAIN_SET else end_epoch
     
-    for epoch in range(last_epoch, end_epoch):
+    for epoch in range(last_epoch, real_end):
 
         current_trainloader = trainloader
         if current_trainloader.sampler is not None and hasattr(current_trainloader.sampler, 'set_epoch'):
@@ -179,7 +181,7 @@ def main():
                   epoch_iters, config.TRAIN.LR, num_iters,
                   trainloader, optimizer, model, writer_dict)
 
-        if flag_rm == 1 or (epoch % 5 == 0 and epoch < end_epoch - 100) or (epoch >= end_epoch - 100):
+        if flag_rm == 1 or (epoch % 5 == 0 and epoch < real_end - 100) or (epoch >= real_end - 100):
             valid_loss, mean_IoU, IoU_array = validate(config, 
                         testloader, model, writer_dict)
         if flag_rm == 1:
