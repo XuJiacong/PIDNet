@@ -80,7 +80,7 @@ class CamVid(BaseDataset):
     def __getitem__(self, index):
         item = self.files[index]
         name = item["name"]
-        image = Image.open(os.path.join(self.root,'camvid',item["img"]))
+        image = Image.open(os.path.join(self.root,'camvid',item["img"])).convert('RGB')
         image = np.array(image)
         size = image.shape
 
@@ -90,7 +90,7 @@ class CamVid(BaseDataset):
 
         image, label, edge = self.gen_sample(image, label, 
                                 self.multi_scale, self.flip, edge_pad=False,
-                                edge_size=self.bd_dilate_size)
+                                edge_size=self.bd_dilate_size, city=False)
 
         return image.copy(), label.copy(), edge.copy(), np.array(size), name
 
