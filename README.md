@@ -17,7 +17,7 @@ This is the official repository for our recent work: PIDNet ([PDF](https://arxiv
 * **More Accurate and Faster**: PIDNet-S presents 78.6% mIOU with speed of 93.2 FPS on Cityscapes test set and 80.1% mIOU with speed of 153.7 FPS on CamVid test set. Also, PIDNet-L becomes the most accurate one (80.6% mIOU) among all the real-time networks for Cityscapes.
 
 ## Updates
-   - This paper was accepted by CVPR 2023, new version and associated materials will be available soon!
+   - This paper was accepted by CVPR 2023, new version and associated materials will be available soon! (Apr/06/2023)
    - Fixed the data bug for Camvid and the new version of arXiv preprint will be available on Jun 13th. (Jun/09/2022)
    - Our paper was marked as state of the art in [Papers with Code](https://paperswithcode.com/task/real-time-semantic-segmentation). (Jun/06/2022)
    - Our paper was submitted to arXiv for public access. (Jun/04/2022)
