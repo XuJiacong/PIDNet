@@ -135,14 +135,14 @@ class PIDNet(nn.Module):
 
     def forward(self, x):
 
-        width_output = x.shape[-1] // 8
-        height_output = x.shape[-2] // 8
-
         x = self.conv1(x)
         x = self.layer1(x)
         x = self.relu(self.layer2(self.relu(x)))
         x_ = self.layer3_(x)
         x_d = self.layer3_d(x)
+
+        width_output  = x_d.shape[-1] 
+        height_output = x_d.shape[-2] 
         
         x = self.relu(self.layer3(x))
         x_ = self.pag3(x_, self.compression3(x))
