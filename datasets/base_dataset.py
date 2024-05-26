@@ -77,14 +77,14 @@ class BaseDataset(data.Dataset):
 
     def multi_scale_aug(self, image, label=None, edge=None,
                         rand_scale=1, rand_crop=True):
-        long_size = np.int(self.base_size * rand_scale + 0.5)
+        long_size = int(self.base_size * rand_scale + 0.5)
         h, w = image.shape[:2]
         if h > w:
             new_h = long_size
-            new_w = np.int(w * long_size / h + 0.5)
+            new_w = int(w * long_size / h + 0.5)
         else:
             new_w = long_size
-            new_h = np.int(h * long_size / w + 0.5)
+            new_h = int(h * long_size / w + 0.5)
 
         image = cv2.resize(image, (new_w, new_h),
                            interpolation=cv2.INTER_LINEAR)
