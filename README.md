@@ -134,7 +134,7 @@ python models/speed/pidnet_speed.py --a 'pidnet-m' --c 11 --r 720 960
 
 * Put all your images in `samples/` and then run the command below using Cityscapes pretrained PIDNet-L for image format of .png:
 ````bash
-python tools/custom.py --a 'pidnet-l' --p '../pretrained_models/cityscapes/PIDNet_L_Cityscapes_test.pt' --t '.png'
+python tools/custom.py --a 'pidnet-l' --p './pretrained_models/cityscapes/PIDNet_L_Cityscapes_test.pt' --t '.png'
 ````
 
 ## Citation
