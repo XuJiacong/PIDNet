@@ -5,6 +5,7 @@
 import os
 import numpy as np
 from PIL import Image
+import cv2
 
 from .base_dataset import BaseDataset
 
@@ -80,12 +81,14 @@ class CamVid(BaseDataset):
     def __getitem__(self, index):
         item = self.files[index]
         name = item["name"]
-        image = Image.open(os.path.join(self.root,'camvid',item["img"])).convert('RGB')
-        image = np.array(image)
+
+        image = cv2.imread(os.path.join(self.root,'camvid',item["img"]))
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         size = image.shape
 
-        color_map = Image.open(os.path.join(self.root,'camvid',item["label"])).convert('RGB')
-        color_map = np.array(color_map)
+        color_map = cv2.imread(os.path.join(self.root,'camvid',item["label"]))
+        color_map = cv2.cvtColor(color_map, cv2.COLOR_BGR2RGB)
+
         label = self.color2label(color_map)
 
         image, label, edge = self.gen_sample(image, label, 
