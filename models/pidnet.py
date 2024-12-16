@@ -135,16 +135,26 @@ class PIDNet(nn.Module):
 
     def forward(self, x):
 
-        width_output = x.shape[-1] // 8
-        height_output = x.shape[-2] // 8
 
+        feats = []
+        #STAGE 0
         x = self.conv1(x)
+        #STAGE 1
         x = self.layer1(x)
+
+        #STAGE 2
         x = self.relu(self.layer2(self.relu(x)))
+        features = x.clone() #features for the backbone
+        feats.append(features)
+        #STAGE 3
         x_ = self.layer3_(x)
         x_d = self.layer3_d(x)
+
+        width_output = x_d.shape[-1] 
+        height_output = x_d.shape[-2] 
         
         x = self.relu(self.layer3(x))
+
         x_ = self.pag3(x_, self.compression3(x))
         x_d = x_d + F.interpolate(
                         self.diff3(x),
@@ -152,7 +162,7 @@ class PIDNet(nn.Module):
                         mode='bilinear', align_corners=algc)
         if self.augment:
             temp_p = x_
-        
+        #STAGE 4
         x = self.relu(self.layer4(x))
         x_ = self.layer4_(self.relu(x_))
         x_d = self.layer4_d(self.relu(x_d))
@@ -164,24 +174,31 @@ class PIDNet(nn.Module):
                         mode='bilinear', align_corners=algc)
         if self.augment:
             temp_d = x_d
-            
+        #STAGE 5    
         x_ = self.layer5_(self.relu(x_))
         x_d = self.layer5_d(self.relu(x_d))
         x = F.interpolate(
                         self.spp(self.layer5(x)),
                         size=[height_output, width_output],
                         mode='bilinear', align_corners=algc)
+        features = x.clone()
+        feats.append(features)
+        features = x_d.clone()
+        feats.append(features)
+        features = x_.clone()
+        feats.append(features)
 
+        #STAGE 6
         x_ = self.final_layer(self.dfm(x_, x, x_d))
 
         if self.augment: 
             x_extra_p = self.seghead_p(temp_p)
             x_extra_d = self.seghead_d(temp_d)
-            return [x_extra_p, x_, x_extra_d]
+            return [x_extra_p, x_, x_extra_d], feats
         else:
-            return x_      
+            return x_, feats    
 
-def get_seg_model(cfg, imgnet_pretrained):
+def get_seg_model(cfg, imgnet_pretrained, model_pretrained_path=None):
     
     if 's' in cfg.MODEL.NAME:
         model = PIDNet(m=2, n=3, num_classes=cfg.DATASET.NUM_CLASSES, planes=32, ppm_planes=96, head_planes=128, augment=True)
@@ -191,7 +208,7 @@ def get_seg_model(cfg, imgnet_pretrained):
         model = PIDNet(m=3, n=4, num_classes=cfg.DATASET.NUM_CLASSES, planes=64, ppm_planes=112, head_planes=256, augment=True)
     
     if imgnet_pretrained:
-        pretrained_state = torch.load(cfg.MODEL.PRETRAINED, map_location='cpu')['state_dict'] 
+        pretrained_state = torch.load(model_pretrained_path, map_location='cpu')['state_dict'] 
         model_dict = model.state_dict()
         pretrained_state = {k: v for k, v in pretrained_state.items() if (k in model_dict and v.shape == model_dict[k].shape)}
         model_dict.update(pretrained_state)
@@ -201,7 +218,7 @@ def get_seg_model(cfg, imgnet_pretrained):
         logging.info('Over!!!')
         model.load_state_dict(model_dict, strict = False)
     else:
-        pretrained_dict = torch.load(cfg.MODEL.PRETRAINED, map_location='cpu')
+        pretrained_dict = torch.load(model_pretrained_path, map_location='cpu')
         if 'state_dict' in pretrained_dict:
             pretrained_dict = pretrained_dict['state_dict']
         model_dict = model.state_dict()

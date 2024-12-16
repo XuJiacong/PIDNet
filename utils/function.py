@@ -19,7 +19,7 @@ from utils.utils import adjust_learning_rate
 
 
 def train(config, epoch, num_epoch, epoch_iters, base_lr,
-          num_iters, trainloader, optimizer, model, writer_dict):
+          num_iters, trainloader, optimizer, model, writer_dict, scaler):
     # Training
     model.train()
 
@@ -45,8 +45,12 @@ def train(config, epoch, num_epoch, epoch_iters, base_lr,
         acc  = acc.mean()
 
         model.zero_grad()
-        loss.backward()
-        optimizer.step()
+        scaler.scale(loss).backward()
+        scaler.step(optimizer)
+
+        # Update the scaler for the next iteration
+        scaler.update()
+
 
         # measure elapsed time
         batch_time.update(time.time() - tic)

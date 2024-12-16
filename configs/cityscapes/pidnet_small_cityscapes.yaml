@@ -2,7 +2,7 @@ CUDNN:
   BENCHMARK: true
   DETERMINISTIC: false
   ENABLED: true
-GPUS: (0,1)
+GPUS: (0,)
 OUTPUT_DIR: 'output'
 LOG_DIR: 'log'
 WORKERS: 6
@@ -43,6 +43,11 @@ TRAIN:
   MULTI_SCALE: true
   IGNORE_LABEL: 255
   SCALE_FACTOR: 16
+  EXP_NAME: pidnet_small_cityscapes
+  DISTILLATION: false
+  TEACHER_PATH: null
+  DISTILL_ALPHA: 0.5
+  DISTILLATION_LOSS: 'norm_mse'
 TEST:
   IMAGE_SIZE:
   - 2048
