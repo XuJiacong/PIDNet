@@ -1,3 +1,39 @@
+
+# PIDNet Fork with Feature Self-Knowledge Distillation
+This repository is a fork of [Original Project](https://github.com/XuJiacong/PIDNet).
+
+---
+
+## New Features Added
+- **Feature Self-Knowledge Distillation**: This fork implements self-knowledge distillation, enabling the model to learn from its internal feature representations.
+
+---
+
+## Additional Notes
+- **Distillation Losses**:  
+  - Distillation losses have been added to the framework.
+  - You can extend or modify these losses in the `utils/distillation_loss.py` file.
+
+- **Feature Layer Selection**:  
+  - Layers used for feature distillation can be adjusted in the `models/pidnet.py` file to customize the training process.
+
+---
+
+## Example Command
+Here is an example command-line usage incorporating the new distillation features:
+
+```bash
+python tools/train.py \
+  --cfg /PIDNet/configs/cityscapes/pidnet_small_cityscapes.yaml \
+  --TRAIN.DISTILL True \
+  --TRAIN.DISTILLATION.LOSS norm_mse \
+  --TRAIN.TEACHER.PATH /cityscapes_small_pidnet_baseline/best.pt \
+  --TRAIN.DISTILL_ALPHA 1.0 \
+  --TRAIN.EXP_NAME cityscapes_small_pidnet_distillation_norm_mse_1 \
+  --TRAIN.BATCH_SIZE_PER_GPU 32
+```
+---
+
 # PIDNet: A Real-time Semantic Segmentation Network Inspired from PID Controller
 	
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/pidnet-a-real-time-semantic-segmentation/real-time-semantic-segmentation-on-camvid)](https://paperswithcode.com/sota/real-time-semantic-segmentation-on-camvid?p=pidnet-a-real-time-semantic-segmentation) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/pidnet-a-real-time-semantic-segmentation/real-time-semantic-segmentation-on-cityscapes)](https://paperswithcode.com/sota/real-time-semantic-segmentation-on-cityscapes?p=pidnet-a-real-time-semantic-segmentation)
@@ -156,4 +192,6 @@ If you think this implementation is useful for your work, please cite our paper:
 * Our implementation is modified based on [HRNet-Semantic-Segmentation](https://github.com/HRNet/HRNet-Semantic-Segmentation).
 * Latency measurement code is borrowed from the [DDRNet](https://github.com/ydhongHIT/DDRNet).
 * Thanks for their nice contribution.
+
+
 
