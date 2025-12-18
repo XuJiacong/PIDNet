@@ -15,6 +15,8 @@ import torch
 import torch.nn as nn
 import torch.backends.cudnn as cudnn
 import torch.optim
+from torch.amp import GradScaler
+
 from tensorboardX import SummaryWriter
 
 import _init_paths
@@ -24,7 +26,9 @@ from configs import config
 from configs import update_config
 from utils.criterion import CrossEntropy, OhemCrossEntropy, BondaryLoss
 from utils.function import train, validate
-from utils.utils import create_logger, FullModel
+from utils.utils import create_logger, FullModel, DistillationFullModel
+from utils.distillation_loss import DistillationLoss
+
 
 
 def parse_args():
@@ -67,17 +71,29 @@ def main():
         'valid_global_steps': 0,
     }
 
+    # initialize GradScaler
+    scaler = GradScaler('cuda')
+
     # cudnn related setting
     cudnn.benchmark = config.CUDNN.BENCHMARK
     cudnn.deterministic = config.CUDNN.DETERMINISTIC
     cudnn.enabled = config.CUDNN.ENABLED
     gpus = list(config.GPUS)
+
+    distillation_loss = None
     if torch.cuda.device_count() != len(gpus):
         print("The gpu numbers do not match!")
         return 0
     
     imgnet = 'imagenet' in config.MODEL.PRETRAINED
-    model = models.pidnet.get_seg_model(config, imgnet_pretrained=imgnet)
+    model = models.pidnet.get_seg_model(config, imgnet_pretrained=imgnet, model_pretrained_path=config.MODEL.PRETRAINED)
+
+    if config.TRAIN.TEACHER_PATH is not None:
+        teacher_model = models.pidnet.get_seg_model(config, imgnet_pretrained=False, model_pretrained_path=config.TRAIN.TEACHER_PATH)
+        distillation_loss = DistillationLoss().get_loss_function(config.TRAIN.DISTILLATION_LOSS)
+        if distillation_loss is None:
+            raise ValueError('Distillation loss is not supported!')
+     
  
     batch_size = config.TRAIN.BATCH_SIZE_PER_GPU * len(gpus)
     # prepare data
@@ -132,7 +148,10 @@ def main():
 
     bd_criterion = BondaryLoss()
     
-    model = FullModel(model, sem_criterion, bd_criterion)
+    if config.TRAIN.DISTILLATION:
+        model = DistillationFullModel(model, teacher_model, sem_criterion, bd_criterion, distillation_loss, config.TRAIN.DISTILL_ALPHA)
+    else:
+        model = FullModel(model, sem_criterion, bd_criterion)
     model = nn.DataParallel(model, device_ids=gpus).cuda()
 
     # optimizer
@@ -179,7 +198,7 @@ def main():
 
         train(config, epoch, config.TRAIN.END_EPOCH, 
                   epoch_iters, config.TRAIN.LR, num_iters,
-                  trainloader, optimizer, model, writer_dict)
+                  trainloader, optimizer, model, writer_dict, scaler)
 
         if flag_rm == 1 or (epoch % 5 == 0 and epoch < real_end - 100) or (epoch >= real_end - 100):
             valid_loss, mean_IoU, IoU_array = validate(config, 
@@ -211,7 +230,7 @@ def main():
 
     writer_dict['writer'].close()
     end = timeit.default_timer()
-    logger.info('Hours: %d' % np.int((end-start)/3600))
+    logger.info('Hours: %d' % int((end-start)/3600))
     logger.info('Done')
 
 if __name__ == '__main__':

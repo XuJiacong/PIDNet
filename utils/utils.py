@@ -18,6 +18,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from configs import config
 
+from torch.amp import autocast
+
 class FullModel(nn.Module):
 
   def __init__(self, model, sem_loss, bd_loss):
@@ -35,26 +37,66 @@ class FullModel(nn.Module):
     return acc
 
   def forward(self, inputs, labels, bd_gt, *args, **kwargs):
-    
-    outputs = self.model(inputs, *args, **kwargs)
-    
-    h, w = labels.size(1), labels.size(2)
-    ph, pw = outputs[0].size(2), outputs[0].size(3)
-    if ph != h or pw != w:
-        for i in range(len(outputs)):
-            outputs[i] = F.interpolate(outputs[i], size=(
-                h, w), mode='bilinear', align_corners=config.MODEL.ALIGN_CORNERS)
+    with autocast(device_type='cuda', dtype=torch.float16):
+        outputs, _ = self.model(inputs, *args, **kwargs)
+        
+        h, w = labels.size(1), labels.size(2)
+        ph, pw = outputs[0].size(2), outputs[0].size(3)
+        if ph != h or pw != w:
+            for i in range(len(outputs)):
+                outputs[i] = F.interpolate(outputs[i], size=(
+                    h, w), mode='bilinear', align_corners=config.MODEL.ALIGN_CORNERS)
 
-    acc  = self.pixel_acc(outputs[-2], labels)
-    loss_s = self.sem_loss(outputs[:-1], labels)
-    loss_b = self.bd_loss(outputs[-1], bd_gt)
+        acc  = self.pixel_acc(outputs[-2], labels)
+        loss_s = self.sem_loss(outputs[:-1], labels)
+        loss_b = self.bd_loss(outputs[-1], bd_gt)
 
-    filler = torch.ones_like(labels) * config.TRAIN.IGNORE_LABEL
-    bd_label = torch.where(F.sigmoid(outputs[-1][:,0,:,:])>0.8, labels, filler)
-    loss_sb = self.sem_loss(outputs[-2], bd_label)
-    loss = loss_s + loss_b + loss_sb
+        filler = torch.ones_like(labels) * config.TRAIN.IGNORE_LABEL
+        bd_label = torch.where(F.sigmoid(outputs[-1][:,0,:,:])>0.8, labels, filler)
+        loss_sb = self.sem_loss(outputs[-2], bd_label)
+        loss = loss_s + loss_b + loss_sb
 
     return torch.unsqueeze(loss,0), outputs[:-1], acc, [loss_s, loss_b]
+
+
+class DistillationFullModel(FullModel):
+
+  def __init__(self, model ,teacher, sem_loss, bd_loss, distillation_loss ,alpha=0.5):
+    super(DistillationFullModel, self).__init__(model, sem_loss, bd_loss)
+
+    # Teacher model is in evaluation mode
+    self.teacher = teacher
+    self.teacher.eval()
+    self.alpha = alpha
+    self.distillation_loss = distillation_loss
+    for param in self.teacher.parameters():
+        param.requires_grad = False
+
+
+
+  def forward(self, inputs, labels, bd_gt, *args, **kwargs):
+    
+    with autocast(device_type='cuda', dtype=torch.float16):
+        s_outputs, s_feats = self.model(inputs, *args, **kwargs)
+        _ , t_feats = self.teacher(inputs, *args, **kwargs)
+        
+        h, w = labels.size(1), labels.size(2)
+        ph, pw = s_outputs[0].size(2), s_outputs[0].size(3)
+        if ph != h or pw != w:
+            for i in range(len(s_outputs)):
+                s_outputs[i] = F.interpolate(s_outputs[i], size=(
+                    h, w), mode='bilinear', align_corners=config.MODEL.ALIGN_CORNERS)
+
+        acc  = self.pixel_acc(s_outputs[-2], labels)
+        loss_s = self.sem_loss(s_outputs[:-1], labels)
+        loss_b = self.bd_loss(s_outputs[-1], bd_gt)
+        distillation_loss = self.distillation_loss(s_feats, t_feats) # Distillation loss
+        filler = torch.ones_like(labels) * config.TRAIN.IGNORE_LABEL
+        bd_label = torch.where(F.sigmoid(s_outputs[-1][:,0,:,:])>0.8, labels, filler)
+        loss_sb = self.sem_loss(s_outputs[-2], bd_label)
+        loss = loss_s + loss_b + loss_sb +  distillation_loss * self.alpha
+
+    return torch.unsqueeze(loss,0), s_outputs[:-1], acc, [loss_s, loss_b, distillation_loss]
 
 
 class AverageMeter(object):
@@ -103,7 +145,7 @@ def create_logger(cfg, cfg_name, phase='train'):
     model = cfg.MODEL.NAME
     cfg_name = os.path.basename(cfg_name).split('.')[0]
 
-    final_output_dir = root_output_dir / dataset / cfg_name
+    final_output_dir = root_output_dir / dataset / cfg_name / cfg.TRAIN.EXP_NAME
 
     print('=> creating {}'.format(final_output_dir))
     final_output_dir.mkdir(parents=True, exist_ok=True)
@@ -133,7 +175,7 @@ def get_confusion_matrix(label, pred, size, num_class, ignore=-1):
     output = pred.cpu().numpy().transpose(0, 2, 3, 1)
     seg_pred = np.asarray(np.argmax(output, axis=3), dtype=np.uint8)
     seg_gt = np.asarray(
-    label.cpu().numpy()[:, :size[-2], :size[-1]], dtype=np.int)
+    label.cpu().numpy()[:, :size[-2], :size[-1]], dtype=int)
 
     ignore_index = seg_gt != ignore
     seg_gt = seg_gt[ignore_index]

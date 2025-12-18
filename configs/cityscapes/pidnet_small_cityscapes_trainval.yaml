@@ -43,6 +43,12 @@ TRAIN:
   MULTI_SCALE: true
   IGNORE_LABEL: 255
   SCALE_FACTOR: 16
+  EXP_NAME: pidnet_small_cityscapes_tv
+  DISTILLATION: false
+  TEACHER_PATH: null
+  DISTILL_ALPHA: 0.5
+  DISTILLATION_LOSS: 'norm_mse'
+
 TEST:
   IMAGE_SIZE:
   - 2048

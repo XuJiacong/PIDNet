@@ -110,6 +110,7 @@ class Cityscapes(BaseDataset):
 
         image, label, edge = self.gen_sample(image, label, 
                                 self.multi_scale, self.flip, edge_size=self.bd_dilate_size)
+        
 
         return image.copy(), label.copy(), edge.copy(), np.array(size), name
 
