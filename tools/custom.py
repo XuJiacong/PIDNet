@@ -41,8 +41,8 @@ def parse_args():
     
     parser.add_argument('--a', help='pidnet-s, pidnet-m or pidnet-l', default='pidnet-l', type=str)
     parser.add_argument('--c', help='cityscapes pretrained or not', type=bool, default=True)
-    parser.add_argument('--p', help='dir for pretrained model', default='../pretrained_models/cityscapes/PIDNet_L_Cityscapes_test.pt', type=str)
-    parser.add_argument('--r', help='root or dir for input images', default='../samples/', type=str)
+    parser.add_argument('--p', help='dir for pretrained model', default='./pretrained_models/cityscapes/PIDNet_L_Cityscapes_test.pt', type=str)
+    parser.add_argument('--r', help='root or dir for input images', default='./samples/', type=str)
     parser.add_argument('--t', help='the format of input images (.jpg, .png, ...)', default='.png', type=str)     
 
     args = parser.parse_args()
@@ -73,15 +73,15 @@ def load_pretrained(model, pretrained):
 
 if __name__ == '__main__':
     args = parse_args()
-    images_list = glob.glob(args.r+'*'+args.t)
-    sv_path = args.r+'outputs/'
+    images_list = glob.glob(os.path.join(args.r,'*'+args.t))
+    sv_path = os.path.join(args.r,'outputs/')
     
     model = models.pidnet.get_pred_model(args.a, 19 if args.c else 11)
     model = load_pretrained(model, args.p).cuda()
     model.eval()
     with torch.no_grad():
         for img_path in images_list:
-            img_name = img_path.split("\\")[-1]
+            img_name = os.path.basename(img_path)
             img = cv2.imread(os.path.join(args.r, img_name),
                                cv2.IMREAD_COLOR)
             sv_img = np.zeros_like(img).astype(np.uint8)
