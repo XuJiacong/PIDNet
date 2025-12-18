@@ -4,7 +4,7 @@
 
 This is the official repository for our recent work: PIDNet ([PDF](https://arxiv.org/pdf/2206.02066)）
 
-**Caution: It appears the download links above are no longer working due to my missing Google Drive account. Please download all the weights via [this link](https://drive.google.com/drive/folders/0BySIOtxxULinfjlGdGFiT3NQVUdLVDBxWnhhTjB4VXNBRkFOa281WHlkektYY2VBcWVZb1k?resourcekey=0-w0JIXUekD-FCW-Rm1Z-HfQ&usp=sharing). Sorry for the inconvenience.**
+**Caution: It appears the download links below are no longer working due to my missing Google Drive account. Please download all the weights via [this link](https://drive.google.com/drive/folders/0BySIOtxxULinfjlGdGFiT3NQVUdLVDBxWnhhTjB4VXNBRkFOa281WHlkektYY2VBcWVZb1k?resourcekey=0-w0JIXUekD-FCW-Rm1Z-HfQ&usp=sharing). Sorry for the inconvenience.**
 
 ## Highlights
 <p align="center">
